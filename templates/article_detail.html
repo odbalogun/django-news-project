@@ -1,4 +1,7 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}{{ object.title }}{% endblock title %}
 
 {% block content %}
     <div class="article-entry">
@@ -12,6 +15,14 @@
     {% for comment in object.comments.all %}
         <p>{{ comment.author }} &middot; {{ comment }}</p>
     {% endfor %}
+    <hr />
+
+    <h4>Add a comment</h4>
+    <form action="" method="post">{% csrf_token %}
+        {{ form|crispy }}
+        <button class="btn btn-success ml-2" type="submit">Save</button>
+    </form>
+
     <div>
         <p>
             {% if article.author.pk == request.user.pk %}
